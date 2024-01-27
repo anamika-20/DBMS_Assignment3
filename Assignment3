@@ -1,0 +1,43 @@
+Purpose: Based on your Twitter database schema, you need to write below queries to perform required operation on database.
+
+1. Fetch all users name from database.
+Select Name 
+From User;
+
+2. Fetch all tweets of user by user id most recent tweets first.
+SELECT TextualContext
+FROM Tweet
+wHERE UserId=1 
+ORDER BY TimestampTweet DESC;
+
+3. Fetch like count of particular tweet by tweet id.
+Select Count(*) AS LikeCount 
+From Likes 
+Where TweetId=1;
+
+4. Fetch retweet count of particular tweet by tweet id.
+Select Count(*) AS CountRetweet 
+From Retweet 
+Where OriginalTweetID = 1;
+
+5. Fetch comment count of particular tweet by tweet id.
+Select Count(*) AS CountComment 
+From Tweet 
+Where TweetID = 1;
+
+6. Fetch all user’s name who have retweeted particular tweet by tweet id.
+Select User.Name 
+From Retweet
+Join User ON Retweet.UserId = User.UserId
+Where Retweet.OriginalTweetId = 1;
+
+7. Fetch all commented tweet’s content for particular tweet by tweet id.
+Select Tweet.TextualContext As Comment
+From Tweet
+Where Tweet.Commented=true AND Tweet.CommentForTweetId = 1 ;
+
+8. Fetch user’s timeline (All tweets from users whom I am following with tweet content and user name who has tweeted it).
+Select Tweet.TextualContext,Tweet.TimestampTweet , User.Name 
+From Tweet
+Join User on Tweet.userId=User.UserId
+Where Tweet.userId IN (Select  FollowingId from Follow Where FollowerID= 1 ) Order By Tweet.TimestampTweet DESC;
